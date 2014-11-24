@@ -1,33 +1,27 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>2ГИС Поиск организаций</title>
+    <title>Поиск организаций - 2ГИС</title>
     <meta name="description" content="Адаптированный поиск огранизаций с использованием базы 2ГИС.">
-
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script>
-        $(function() {
-            $("#search").change(function() {
-                $.getJSON('/api/search', { what: this.value, where: 'Новосибирск' }, function (data) {
-                    $(data.result).each(function () {
-                        $('#result').append('<p>' + this.name + '</p>');
-                        $('#result').focus();
-                    });
-                });
-            });
-        });
-    </script>
+    
+    <script src="http://catalog.api.2gis.ru/assets/apitracker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+    <script src="/js/app.js"></script>
 </head>
 <body>
-    <div>
+    <form data-bind="attr: {action: '#search/' + query()}">
         <label for="search">Введите запрос</label>
-        <input type="text" id="search" />
-    </div>
+        <input type="text" id="search" data-bind="value: query"/>
+        <button type="submit">Найти</button>
+    </form>
 
-    <div id="result">
-    </div>
+    <div data-bind="foreach: cards">
+        <a data-bind="text: name"></a>
+    </div>    
 </body>
 </html>
