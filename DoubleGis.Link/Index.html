@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>2ГИС Поиск организаций</title>
+    <meta name="description" content="Адаптированный поиск огранизаций с использованием базы 2ГИС.">
+
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script>
+        $(function() {
+            $("#search").change(function() {
+                $.getJSON('/api/search', { what: this.value, where: 'Новосибирск' }, function (data) {
+                    $(data.result).each(function () {
+                        $('#result').append('<p>' + this.name + '</p>');
+                        $('#result').focus();
+                    });
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <label for="search">Введите запрос</label>
+        <input type="text" id="search" />
+    </div>
+
+    <div id="result">
+    </div>
+</body>
+</html>
