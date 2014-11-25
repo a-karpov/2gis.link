@@ -32,8 +32,9 @@ namespace DoubleGis.Link.Controllers
 	    {
 			using (var client = new WebClient())
 			{
-				var response = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", ApiKey, id, hash)));
-				var o = JsonConvert.DeserializeObject<Card>(Encoding.UTF8.GetString(response));
+				var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", ApiKey, id, hash)));
+				var json = Encoding.UTF8.GetString(data);
+				var o = JsonConvert.DeserializeObject<Card>(json);
 				return View(o);
 			}
 	    }

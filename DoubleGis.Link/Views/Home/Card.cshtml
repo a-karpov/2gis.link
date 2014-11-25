@@ -8,6 +8,12 @@
 <p>Рубрики: @string.Join(" ", @Model.Rubrics.Select(r => r.Replace('/', '-')))</p>
 <p>Aдрес: @string.Join(" ", @Model.Address)</p>
 
+@foreach (var contact in Model.Contacts.SelectMany(cg => cg.Contacts))
+{
+    <p>@contact.Type: @contact.Value</p>
+}
+    
+
 <script>
     DG.apitracker.regBC('@Model.RegisterBcUrl');
 </script>
