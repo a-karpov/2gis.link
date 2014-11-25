@@ -1,14 +1,19 @@
 ﻿@model DoubleGis.Link.Models.SearchResponse
 
 @{
-    ViewBag.Title = "Результат поиска";
+    ViewBag.Title = "Поиск";
 }
 
-<h1>По запросу @Model.What в @Model.Where найдено @Model.Total организаций.</h1>
+<div class="row">
+    <div class="col-xs-12 col-md-8">
+        <h1><span class="text-capitalize">@Model.What</span> в @Model.Where: найдено @Model.Total.</h1>
 
-@foreach (var card in @Model.Result)
-{
-    <a href="/card/@string.Format("{0}/{1}", card.Id, card.Hash)" class="card-link">@card.Name</a>
-    <p>Рубрики: @string.Join(" ", card.Rubrics.Select(r => r.Replace('/', '-')))</p>
-    <p>Aдрес: @string.Join(" ", card.Address)</p>
-}
+        @foreach (var card in @Model.Result)
+        {
+            <a href="/card/@string.Format("{0}/{1}", card.Id, card.Hash)" class="card-link"><strong>@card.Name</strong></a>
+            <p>Рубрики: @string.Join(" ", card.Rubrics.Select(r => r.Replace('/', '-')))</p>
+            <p>Aдрес: @string.Join(" ", card.Address)</p>
+        }
+    </div>
+</div>
+
