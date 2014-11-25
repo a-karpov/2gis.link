@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
+using System.Web.UI.HtmlControls;
 
 namespace DoubleGis.Link.Models
 {
@@ -64,6 +66,10 @@ namespace DoubleGis.Link.Models
 					value.Substring(5, value.Length - 9),
 					value.Substring(value.Length - 4, 2),
 					value.Substring(value.Length - 2, 2));
+			}
+			if (contact.Type == "website")
+			{
+				value = string.Format(@"<a href=""{0}"">{1}</a>", contact.Value, contact.Alias);
 			}
 
 			return new Field { Name = name, Value = value };

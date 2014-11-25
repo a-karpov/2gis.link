@@ -8,12 +8,17 @@
 
 @foreach (var card in @Model.Cards)
 {
-   <a href="#" class="card-link"><strong>@card.Name</strong></a> <small>@card.Type</small>
+    
+        <h2 class="card-link">@card.Name <small>@card.Type</small></h2> 
+    
+   
+    
+  
     <div>Рубрики: @string.Join(" ", card.Rubrics.Select(r => r.Replace('/', '-')))</div>
 
     foreach (var field in @card.Fields)
     {
-        <div>@field.Key: @string.Join(", ", field)</div>
+        <div><span class="sr-only">@field.Key:</span> @Html.Raw(string.Join(", ", field))</div>
     }
 }
 
