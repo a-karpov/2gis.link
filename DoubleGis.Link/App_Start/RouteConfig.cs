@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace DoubleGis.Link
@@ -23,6 +19,12 @@ namespace DoubleGis.Link
                 name: "Search",
                 url: "search/{what}/{where}",
                 defaults: new { controller = "Home", action = "Search", }
+            );
+
+			routes.MapRoute(
+                name: "Card",
+                url: "card/{id}/{hash}",
+                defaults: new { controller = "Home", action = "Card", }
             );
         }
     }
