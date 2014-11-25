@@ -2,19 +2,15 @@
     ViewBag.Title = "Адаптированный справочник организаций";
 }
 
-<div class="row">
-    <div class="col-xs-12">
-        <form role="form" data-bind="submit: action">
-            <label for="search" class=""><h1>Поиск</h1></label>
-            <div class="input-group">
-                <input type="text" class="form-control" id="search" placeholder="Я ищу..." data-bind="value: what" />
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">Найти!</button>
-                </span>
-            </div>
-        </form>
+<form role="form" data-bind="submit: action">
+    <label for="search" class=""><h1>Поиск</h1></label>
+    <div class="input-group">
+        <input type="text" class="form-control" id="search" placeholder="Я ищу..." data-bind="value: what" />
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Найти!</button>
+        </span>
     </div>
-</div>
+</form>
 
 <script>
     app.applyIndexViewModel();

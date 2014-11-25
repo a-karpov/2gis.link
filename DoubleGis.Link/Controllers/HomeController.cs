@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Text;
@@ -23,19 +24,17 @@ namespace DoubleGis.Link.Controllers
 			using (var client = new WebClient())
 			{
 				var response = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/search?key={0}&version=1.3&what={1}&where={2}", ApiKey, what, where)));
-				var o = JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
-				return View(o);
-			}
-	    }
+				var searchResponse = JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
 
-	    public ActionResult Card(string id, string hash)
-	    {
-			using (var client = new WebClient())
-			{
-				var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", ApiKey, id, hash)));
-				var json = Encoding.UTF8.GetString(data);
-				var o = JsonConvert.DeserializeObject<Card>(json);
-				return View(o);
+				var cards = new List<Card>();
+				foreach (var cardLink in searchResponse.Result)
+				{
+					var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", ApiKey, cardLink.Id, cardLink.Hash)));
+					var card = JsonConvert.DeserializeObject<Card>(Encoding.UTF8.GetString(data));
+					cards.Add(card);
+				}
+
+				return View(new SearchModel(searchResponse, cards));
 			}
 	    }
     }

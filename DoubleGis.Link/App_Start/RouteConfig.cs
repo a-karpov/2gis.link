@@ -17,14 +17,8 @@ namespace DoubleGis.Link
 
 			routes.MapRoute(
                 name: "Search",
-                url: "search/{what}/{where}",
+                url: "{what}/{where}",
                 defaults: new { controller = "Home", action = "Search", }
-            );
-
-			routes.MapRoute(
-                name: "Card",
-                url: "card/{id}/{hash}",
-                defaults: new { controller = "Home", action = "Card", }
             );
         }
     }

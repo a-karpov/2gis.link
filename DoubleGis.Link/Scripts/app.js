@@ -6,7 +6,7 @@
         this.where = ko.observable('Новосибирск');
 
         this.action = function () {
-            location = 'search/' + self.what() + '/' + self.where();
+            location =  self.what() + '/' + self.where();
         }
     };
 
