@@ -1,19 +1,17 @@
-﻿@model DoubleGis.Link.Models.SearchModel
+﻿@using DoubleGis.Link.Models
+@model DoubleGis.Link.Models.SearchModel
 
 @{
     ViewBag.Title = "Поиск";
 }
 
-<h1><span class="text-capitalize">@Model.What</span> <small>@Model.Where, всего: @Model.Total</small></h1>
+<div class="page-header">
+    <h1><span class="text-capitalize">@Model.What</span> <small>@Model.Where, всего: @Model.Total</small></h1>
+</div>
 
-@foreach (var card in @Model.Cards)
+@foreach (CardModel card in @Model.Cards)
 {
-    
-        <h2 class="card-link">@card.Name <small>@card.Type</small></h2> 
-    
-   
-    
-  
+    <h2 class="card-link">@card.Name <small>@card.Type</small></h2>
     <div>Рубрики: @string.Join(" ", card.Rubrics.Select(r => r.Replace('/', '-')))</div>
 
     foreach (var field in @card.Fields)
@@ -23,7 +21,7 @@
 }
 
 <script>
-    @foreach (var card in @Model.Cards)
+    @foreach (CardModel card in @Model.Cards)
     {
         @:DG.apitracker.regBC('@card.RegisterBcUrl');
     }

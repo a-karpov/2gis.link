@@ -35,7 +35,7 @@ namespace DoubleGis.Link.Controllers
 					cards.Add(card);
 				}
 
-				return View(new SearchModel(searchResponse, cards));
+				return View(new SearchModel(searchResponse, cards){Page = page});
 			}
 	    }
     }
