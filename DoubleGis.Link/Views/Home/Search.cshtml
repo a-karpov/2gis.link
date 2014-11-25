@@ -1,8 +1,12 @@
 ﻿@model DoubleGis.Link.Models.SearchResponse
 
 @{
-    ViewBag.Title = "Search";
+    ViewBag.Title = "Поиск организаций";
 }
 
-<h2>Search</h2>
+<h1>По запросу @Model.What в @Model.Where найдено @Model.Total организаций.</h1>
 
+@foreach (var card in @Model.Result)
+{
+    <a href="/card/@card.Id" class="card-link">@card.Name. Рубрики: @string.Join(" ", card.Rubrics)</a>
+}

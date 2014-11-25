@@ -1,28 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "Поиск организаций";
+﻿@{
+    ViewBag.Title = "Справочник организаций";
 }
 
 <form data-bind="submit: action">
-    <label for="search">Введите запрос</label>
+    <label for="search">Поиск:</label>
     <input type="text" id="search" data-bind="value: what" />
     <button type="submit">Найти</button>
 </form>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
 <script>
-    (function() {
-        function ViewModel() {
-            var self = this;
-
-            this.what = ko.observable();
-            this.where = ko.observable('Новосибирск');
-
-            this.action = function() {
-                location = 'search/' + self.what() + '/' + self.where();
-            }
-        }
-
-        ko.applyBindings(new ViewModel());
-    })();
+    app.applyIndexViewModel();
 </script>

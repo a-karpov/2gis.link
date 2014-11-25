@@ -27,5 +27,10 @@ namespace DoubleGis.Link.Controllers
 				return View(o);
 			}
 	    }
+
+	    public string Card(string id)
+	    {
+		    return id;
+	    }
     }
 }
