@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleGis.Link", "DoubleGis.Link\DoubleGis.Link.csproj", "{A47F9887-6731-4B1B-AC93-3E7836E91B00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleGis.Link", "DoubleGis.Link\DoubleGis.Link.csproj", "{05CFC289-A349-4D2F-844D-9689F09A02A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A47F9887-6731-4B1B-AC93-3E7836E91B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A47F9887-6731-4B1B-AC93-3E7836E91B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A47F9887-6731-4B1B-AC93-3E7836E91B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A47F9887-6731-4B1B-AC93-3E7836E91B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CFC289-A349-4D2F-844D-9689F09A02A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CFC289-A349-4D2F-844D-9689F09A02A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CFC289-A349-4D2F-844D-9689F09A02A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CFC289-A349-4D2F-844D-9689F09A02A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
