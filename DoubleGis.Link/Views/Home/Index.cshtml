@@ -2,10 +2,10 @@
     ViewBag.Title = "Адаптированный справочник организаций";
 }
 
-<form role="form" data-bind="submit: action">
+<form name="form" role="form">
     <label for="search" class=""><h1>Поиск</h1></label>
     <div class="input-group">
-        <input type="text" class="form-control" id="search" placeholder="Я ищу..." data-bind="value: what" />
+        <input name="what" type="text" class="form-control" placeholder="Я ищу..." data-bind="value: what" />
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit">Найти!</button>
         </span>
@@ -13,5 +13,12 @@
 </form>
 
 <script>
-    app.applyIndexViewModel();
+    document.form.onsubmit = function () {
+        var what = document.form.what.value;
+        if (what) {
+            location = what + '/Новосибирск';
+        }
+
+        return false;
+    };
 </script>
