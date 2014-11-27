@@ -382,8 +382,9 @@
     "forms.less",
     "buttons.less",
     "responsive-utilities.less",
-    "input-groups.less"
+    "input-groups.less",
+    "pagination.less"
   ],
   "js": [],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=a34f34b38bf73eba4456"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=adacaf7e5247ef1c562b"
 }

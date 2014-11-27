@@ -20,6 +20,21 @@
     }
 }
 
+<nav>
+    <ul class="pagination">
+        @if (Model.Page > 1)
+        {
+            <li><a href="/@Model.What/@Model.Where/@(Model.Page-1)"><span aria-hidden="true">&larr;</span> <span>Назад</span></a></li>
+        }
+
+        <li><a href="/@Model.What/@Model.Where/@(Model.Page+1)"><span>Следущая</span> <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+    
+    <ul class="pagination pull-right">
+        <li><a href="/">Новый поиск</a></li>
+    </ul>
+</nav>
+
 <script src="http://catalog.api.2gis.ru/assets/apitracker.js"></script>
 <script>
     @foreach (CardModel card in @Model.Cards)

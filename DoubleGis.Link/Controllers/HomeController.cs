@@ -27,6 +27,11 @@ namespace DoubleGis.Link.Controllers
 				var response = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/search?key={0}&version=1.3&what={1}&where={2}&pagesize={3}&page={4}", _apiKey, what, where, _pagesize, page)));
 				var searchResponse = JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
 
+				if (searchResponse.ResponseCode == 404)
+				{
+					return View("NotFound");
+				}
+
 				var cards = new List<Card>();
 				foreach (var cardLink in searchResponse.Result)
 				{

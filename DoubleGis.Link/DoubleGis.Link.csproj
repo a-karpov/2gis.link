@@ -111,6 +111,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Content\bootstrap-config.json" />
+    <Content Include="Views\Home\NotFound.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
