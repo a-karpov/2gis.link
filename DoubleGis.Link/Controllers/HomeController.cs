@@ -40,7 +40,7 @@ namespace DoubleGis.Link.Controllers
 					cards.Add(card);
 				}
 
-				return View(new SearchModel(searchResponse, cards){Page = page});
+				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = _pagesize * page < searchResponse.Total});
 			}
 	    }
     }

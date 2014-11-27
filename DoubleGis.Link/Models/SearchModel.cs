@@ -13,7 +13,8 @@ namespace DoubleGis.Link.Models
 		public IEnumerable<CardLink> Result { get; set; }
 		public IEnumerable<CardModel> Cards { get; set; }
 		public int Page { get; set; }
-
+		public bool HasNextPage { get; set; }
+		
 		public SearchModel(SearchResponse response, IEnumerable<Card> cards)
 		{
 			Total = response.Total;

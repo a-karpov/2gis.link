@@ -26,8 +26,11 @@
         {
             <li><a href="/@Model.What/@Model.Where/@(Model.Page-1)"><span aria-hidden="true">&larr;</span> <span>Назад</span></a></li>
         }
-
-        <li><a href="/@Model.What/@Model.Where/@(Model.Page+1)"><span>Следущая</span> <span aria-hidden="true">&rarr;</span></a></li>
+        
+        @if (Model.HasNextPage)
+        {
+            <li><a href="/@Model.What/@Model.Where/@(Model.Page + 1)"><span>Следущая</span> <span aria-hidden="true">&rarr;</span></a></li>
+        }
     </ul>
     
     <ul class="pagination pull-right">
