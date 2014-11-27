@@ -28,7 +28,10 @@
 @foreach (CardModel card in @Model.Cards)
 {
     <h2 class="card-link">@card.Name<small>@card.Type</small></h2>
-    <div><span class="sr-only">Aдрес:</span>@card.Address</div>
+    
+    <div>
+        <span class="sr-only">Aдрес:</span><strong>@card.Address</strong>
+    </div>
 
     if (card.Rubrics != null)
     {
@@ -69,17 +72,29 @@
     <ul class="pagination">
         @if (Model.Page > 1)
         {
-            <li><a href="/@Model.What/@Model.Where/@(Model.Page-1)"><span aria-hidden="true">&larr;</span> <span>Назад</span></a></li>
+            <li>
+                <a href="/@Model.What/@Model.Where/@(Model.Page-1)">
+                    <span aria-hidden="true">&larr; </span>
+                    <span class="hidden-xs">Назад</span>
+                    <span class="visible-xs-inline sr-only">Назад</span>
+                </a>
+            </li>
         }
 
         @if (Model.HasNextPage)
         {
-            <li><a href="/@Model.What/@Model.Where/@(Model.Page + 1)"><span>Следущая</span> <span aria-hidden="true">&rarr;</span></a></li>
+            <li>
+                <a href="/@Model.What/@Model.Where/@(Model.Page + 1)">
+                    <span class="hidden-xs">Следущая</span>
+                    <span class="visible-xs-inline sr-only">Следущая</span>
+                    <span aria-hidden="true"> &rarr;</span>
+                </a>
+            </li>
         }
     </ul>
 
     <ul class="pagination pull-right">
-        <li><a href="/">Новый поиск</a></li>
+        <li><a href="/"><span>Новый поиск</span></a></li>
     </ul>
 </nav>
 
