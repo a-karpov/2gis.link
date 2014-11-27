@@ -1,10 +1,25 @@
-﻿@using System.Security.Policy
-@using DoubleGis.Link.Models
+﻿@using DoubleGis.Link.Models
 @model DoubleGis.Link.Models.SearchModel
+
+@helper DysplayLinks(string name, IEnumerable<string> links)
+{
+    if (links != null && links.Any())
+    {
+        <div>
+            <span class="sr-only">@name:</span>
+            @foreach (var link in links)
+            {
+                var uri = new Uri(link);
+                <a href="@link">@(uri.Host + uri.PathAndQuery)</a>
+            }
+        </div>
+    }
+}
 
 @{
     ViewBag.Title = "Поиск";
 }
+
 
 <div class="page-header">
     <h1><span class="text-capitalize">@Model.What</span> <small>@Model.Where, всего: @Model.Total</small></h1>
@@ -44,41 +59,10 @@
         }
     </div>
 
-    <div>
-        <span class="sr-only">В Контакте:</span>
-        @foreach (var vk in card.Vkontakte)
-        {
-            var uri = new Uri(vk);
-            <a href="@vk">@(uri.Host + uri.PathAndQuery)</a>
-        }
-    </div>
-
-    <div>
-        <span class="sr-only">Инстаграм:</span>
-        @foreach (var v in card.Instagram)
-        {
-            var uri = new Uri(v);
-            <a href="@v">@(uri.Host + uri.PathAndQuery)</a>
-        }
-    </div>
-
-    <div>
-        <span class="sr-only">Фэйсбук:</span>
-        @foreach (var v in card.Facebook)
-        {
-            var uri = new Uri(v);
-            <a href="@v">@(uri.Host + uri.PathAndQuery)</a>
-        }
-    </div>
-
-    <div>
-        <span class="sr-only">Твиттер:</span>
-        @foreach (var v in card.Twitter)
-        {
-            var uri = new Uri(v);
-            <a href="@v">@(uri.Host + uri.PathAndQuery)</a>
-        }
-    </div>
+    @DysplayLinks("В Контакте", card.Vkontakte);
+    @DysplayLinks("Инстаграм", card.Instagram);
+    @DysplayLinks("Фэйсбук", card.Facebook);
+    @DysplayLinks("Твиттер", card.Twitter);
 }
 
 <nav>
