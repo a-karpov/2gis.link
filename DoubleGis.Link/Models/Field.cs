@@ -7,7 +7,13 @@ namespace DoubleGis.Link.Models
 {
 	public class Field
 	{
-		public string Name { get; set; }
-		public string Value { get; set; }
+		public Field(Contact contact)
+		{
+			Value = contact.Value;
+			Alias = contact.Alias;
+		}
+
+		public string Value { get; private set; }
+		public string Alias { get; private set; }
 	}
 }

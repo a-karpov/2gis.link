@@ -32,11 +32,11 @@ namespace DoubleGis.Link.Controllers
 					return View("NotFound");
 				}
 
-				var cards = new List<Card>();
+				var cards = new List<ProfileResponse>();
 				foreach (var cardLink in searchResponse.Result)
 				{
 					var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", _apiKey, cardLink.Id, cardLink.Hash)));
-					var card = JsonConvert.DeserializeObject<Card>(Encoding.UTF8.GetString(data));
+					var card = JsonConvert.DeserializeObject<ProfileResponse>(Encoding.UTF8.GetString(data));
 					cards.Add(card);
 				}
 

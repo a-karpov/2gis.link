@@ -96,8 +96,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Card.cs" />
-    <Compile Include="Models\CardLink.cs" />
+    <Compile Include="Models\ProfileResponse.cs" />
+    <Compile Include="Models\SearchResponseResultElem.cs" />
     <Compile Include="Models\CardModel.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\SearchModel.cs" />

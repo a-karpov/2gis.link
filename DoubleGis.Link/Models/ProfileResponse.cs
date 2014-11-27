@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace DoubleGis.Link.Models
 {
-	public class Card
+	public class ProfileResponse
 	{
 		[JsonProperty("response_code")]
 		public int ResponseCode { get; set; }
@@ -24,7 +24,6 @@ namespace DoubleGis.Link.Models
 
 	public class ContactsGroup
 	{
-		public string Name { get; set; }
 		 public IEnumerable<Contact> Contacts { get; set; }
 	}
 }
