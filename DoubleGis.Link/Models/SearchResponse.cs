@@ -10,6 +10,6 @@ namespace DoubleGis.Link.Models
 		public int Total { get; set; }
 		public string What { get; set; }
 		public string Where { get; set; }
-		public IEnumerable<SearchResponseResultElem> Result { get; set; } 
+		public IEnumerable<SearchResultElem> Result { get; set; } 
 	}
 }

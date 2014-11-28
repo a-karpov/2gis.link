@@ -18,6 +18,7 @@ namespace DoubleGis.Link.Providers
 
 		public int PageSize { get { return 10; } }
 		public string ApiKey { get { return _settings["apiKey"]; } }
+		public string ApiVersion { get { return "1.3"; } }
 		public string OverridedIp { get { return _settings["overridedIp"]; } }
 	}
 }

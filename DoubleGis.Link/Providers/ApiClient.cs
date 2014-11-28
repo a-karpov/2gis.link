@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -24,7 +25,7 @@ namespace DoubleGis.Link.Providers
 			request.Query = ToQueryString(new NameValueCollection()
 			{
 				{"key", _appSettings.ApiKey},
-				{"version", "1.3"},
+				{"version", _appSettings.ApiVersion},
 				{"what", what},
 				{"where", where},
 				{"pagesize", _appSettings.PageSize.ToString()},
@@ -34,8 +35,35 @@ namespace DoubleGis.Link.Providers
 			using (var client = new WebClient())
 			{
 				var response = client.DownloadData(request.Uri);
-				var searchResponse = JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
+				return JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
 			}
+		}
+
+		public IReadOnlyCollection<ProfileResponse> LoadProfiles(IEnumerable<SearchResultElem> resultElems)
+		{
+			var result = new List<ProfileResponse>();
+			var request = "http://catalog.api.2gis.ru/profile?" + ToQueryString(new NameValueCollection
+			{
+				{"key", _appSettings.ApiKey},
+				{"version", _appSettings.ApiVersion},
+			});
+		
+			using (var client = new WebClient())
+			{
+				foreach (var elem in resultElems)
+				{
+					var data = client.DownloadData(request + "&" + ToQueryString(new NameValueCollection
+					{
+						{ "id", elem.Id },
+						{ "hash", elem.Hash }
+					}));
+
+					var profile = JsonConvert.DeserializeObject<ProfileResponse>(Encoding.UTF8.GetString(data));
+					result.Add(profile);
+				}
+			}
+
+			return result.AsReadOnly();
 		}
 
 		#region Private
@@ -47,7 +75,7 @@ namespace DoubleGis.Link.Providers
 						 select string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(value)))
 						 .ToArray();
 
-			return "?" + string.Join("&", array);
+			return string.Join("&", array);
 		}
 
 		#endregion

@@ -36,21 +36,14 @@ namespace DoubleGis.Link.Controllers
 				return View("EmptyResult");
 			}
 
-			using (var client = new WebClient())
+		    var profiles = _apiClient.LoadProfiles(searchResponse.Result);
+
+		    return View(new SearchModel(searchResponse, profiles)
 			{
-		
-
-
-				var cards = new List<ProfileResponse>();
-				foreach (var cardLink in searchResponse.Result)
-				{
-					var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", _appSettings.ApiKey, cardLink.Id, cardLink.Hash)));
-					var card = JsonConvert.DeserializeObject<ProfileResponse>(Encoding.UTF8.GetString(data));
-					cards.Add(card);
-				}
-
-				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = _appSettings.PageSize * page < searchResponse.Total});
-			}
+				Page = page,
+				HasNextPage = _appSettings.PageSize*page < searchResponse.Total
+			});
+			
 	    }
 
 	    public ActionResult Recognize(string query)

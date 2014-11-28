@@ -107,7 +107,7 @@
     </Compile>
     <Compile Include="Models\Geolocation.cs" />
     <Compile Include="Models\ProfileResponse.cs" />
-    <Compile Include="Models\SearchResponseResultElem.cs" />
+    <Compile Include="Models\SearchResultElem.cs" />
     <Compile Include="Models\CardModel.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\SearchModel.cs" />
