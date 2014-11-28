@@ -12,9 +12,9 @@ namespace DoubleGis.Link.Controllers
     public class HomeController : Controller
     {
 	    private readonly string _apiKey = ConfigurationManager.AppSettings["apiKey"];
-	    private int _pagesize = 10;
+	    private const int Pagesize = 7;
 
-        // GET: Home
+	    // GET: Home
         public ActionResult Index()
         {
             return View();
@@ -24,12 +24,12 @@ namespace DoubleGis.Link.Controllers
 	    {
 			using (var client = new WebClient())
 			{
-				var response = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/search?key={0}&version=1.3&what={1}&where={2}&pagesize={3}&page={4}", _apiKey, what, where, _pagesize, page)));
+				var response = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/search?key={0}&version=1.3&what={1}&where={2}&pagesize={3}&page={4}", _apiKey, what, where, Pagesize, page)));
 				var searchResponse = JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
 
 				if (searchResponse.ResponseCode == 404)
 				{
-					return View("NotFound");
+					return View("EmptyResult");
 				}
 
 				var cards = new List<ProfileResponse>();
@@ -40,7 +40,7 @@ namespace DoubleGis.Link.Controllers
 					cards.Add(card);
 				}
 
-				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = _pagesize * page < searchResponse.Total});
+				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = Pagesize * page < searchResponse.Total});
 			}
 	    }
     }
