@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Net;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using DoubleGis.Link.Models;
 using Newtonsoft.Json;
@@ -17,7 +18,15 @@ namespace DoubleGis.Link.Controllers
 	    // GET: Home
         public string Index()
         {
-            return HttpContext.Request.UserHostAddress;;
+			string strHostName = System.Net.Dns.GetHostName();
+       string clientIPAddress = System.Net.Dns.GetHostAddresses(strHostName).GetValue(1).ToString();
+	  
+
+	        return string.Format("HTTP_X_FORWARDED_FOR: {0} \nREMOTE_ADDR {1}\n GetHostName {2} \n clientIPAddress {3}",
+				HttpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"], 
+				 HttpContext.Request.ServerVariables["REMOTE_ADDR"],strHostName
+				 ,clientIPAddress
+				 );
         }
 
 	    public ActionResult Search(string what, string where, int page = 1)
@@ -43,5 +52,19 @@ namespace DoubleGis.Link.Controllers
 				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = Pagesize * page < searchResponse.Total});
 			}
 	    }
+
+       public String GetLanIPAddress(HttpRequestBase request)
+        {
+            //The X-Forwarded-For (XFF) HTTP header field is a de facto standard for identifying the originating IP address of a 
+            //client connecting to a web server through an HTTP proxy or load balancer
+            String ip = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+        
+            if (string.IsNullOrEmpty(ip))
+            {
+                ip = request.ServerVariables["REMOTE_ADDR"];
+            }
+        
+            return ip;
+        }
     }
 }
