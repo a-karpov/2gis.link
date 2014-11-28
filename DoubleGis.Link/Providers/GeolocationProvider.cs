@@ -20,36 +20,38 @@ namespace DoubleGis.Link.Providers
 		public IEnumerable<Geolocation> GetLocationSorted(string ip)
 		{
 			var locations = _esClient.FindGeolocationSorted(ip);
-
 			if (locations.Any())
 			{
 				return locations;
 			}
 
-			var client = new IPCheckContainer(new Uri("https://api.datamarket.azure.com/Data.ashx/MelissaData/IPCheck/v1/"));
-			client.Credentials = new NetworkCredential("accountKey", ConfigurationManager.AppSettings["ipCheckKey"]);
-
-			var response = client.SuggestIPAddresses(ip, 5, 0.7).Execute().ToArray();
-
-			locations =  response
-				.OrderByDescending(e => e.Confidence)
-				.Select(e => new Geolocation
-				{
-					Country = e.Country,
-					City = e.City,
-					Ip = ip,
-					Lat = e.Latitude,
-					Lon = e.Longitude,
-					Confidence = e.Confidence
-				});
-
-
-			foreach (var geolocation in locations)
+			var client = GetIpCheckClient();
+			foreach (var loc in client.SuggestIPAddresses(ip, 5, 0.7).Execute())
 			{
-				_esClient.IndexGeolocation(geolocation);
+				_esClient.IndexGeolocation(new Geolocation
+				{
+					Country = loc.Country,
+					City = loc.City,
+					Ip = ip,
+					Lat = loc.Latitude,
+					Lon = loc.Longitude,
+					Confidence = loc.Confidence
+				});
 			}
 
-			return locations;
+			return _esClient.FindGeolocationSorted(ip);
 		}
+
+		#region Private
+
+		private static IPCheckContainer GetIpCheckClient()
+		{
+			var client = new IPCheckContainer(new Uri("https://api.datamarket.azure.com/Data.ashx/MelissaData/IPCheck/v1/"));
+			client.Credentials = new NetworkCredential("accountKey", ConfigurationManager.AppSettings["ipCheckKey"]);
+			return client;
+		}
+
+		#endregion
+
 	}
 }
