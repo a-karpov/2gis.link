@@ -15,9 +15,9 @@ namespace DoubleGis.Link.Controllers
 	    private const int Pagesize = 7;
 
 	    // GET: Home
-        public ActionResult Index()
+        public string Index()
         {
-            return View();
+            return HttpContext.Request.UserHostAddress;;
         }
 
 	    public ActionResult Search(string what, string where, int page = 1)
