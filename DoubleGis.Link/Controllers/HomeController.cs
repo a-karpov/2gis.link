@@ -18,15 +18,46 @@ namespace DoubleGis.Link.Controllers
 	    // GET: Home
         public string Index()
         {
-			string strHostName = System.Net.Dns.GetHostName();
-       string clientIPAddress = System.Net.Dns.GetHostAddresses(strHostName).GetValue(1).ToString();
-	  
+		
 
-	        return string.Format("HTTP_X_FORWARDED_FOR: {0} \nREMOTE_ADDR {1}\n GetHostName {2} \n clientIPAddress {3}",
-				HttpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"], 
-				 HttpContext.Request.ServerVariables["REMOTE_ADDR"],strHostName
-				 ,clientIPAddress
-				 );
+	        var sb = new StringBuilder();
+
+	        try
+	        {
+		        sb.AppendLine(HttpContext.Request.ServerVariables["HTTP_X_FORWARDED_FOR"]);
+	        }
+	        catch (Exception){sb.AppendLine("Fail");}
+
+			 sb.AppendLine("|");
+
+			    try
+	        {
+		        sb.AppendLine(HttpContext.Request.ServerVariables["REMOTE_ADDR"]);
+	        }
+	        catch (Exception){sb.AppendLine("Fail");}
+
+			 sb.AppendLine("|");
+
+			    try
+	        {
+		        sb.AppendLine(System.Net.Dns.GetHostName());
+	        }
+	        catch (Exception){sb.AppendLine("Fail");}
+
+			 sb.AppendLine("|");
+
+			    try
+	        {
+						string strHostName = System.Net.Dns.GetHostName();
+       string clientIPAddress = System.Net.Dns.GetHostAddresses(strHostName).GetValue(1).ToString();
+		        sb.AppendLine(clientIPAddress);
+	        }
+	        catch (Exception){sb.AppendLine("Fail");}
+
+			 sb.AppendLine("|");
+
+
+	        return sb.ToString();
         }
 
 	    public ActionResult Search(string what, string where, int page = 1)
