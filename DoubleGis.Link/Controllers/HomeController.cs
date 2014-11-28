@@ -93,7 +93,7 @@ namespace DoubleGis.Link.Controllers
 			    ip = request.ServerVariables["REMOTE_ADDR"];
 		    }
 
-		    return ip;
+		    return ip.Split(':').First();
 	    }
 
 	    #endregion
