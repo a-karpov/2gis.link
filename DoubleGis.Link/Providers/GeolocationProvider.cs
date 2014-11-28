@@ -17,7 +17,7 @@ namespace DoubleGis.Link.Providers
 			_indexStorage = indexStorage;
 		}
 
-		public IEnumerable<Geolocation> GetLocation(string ip)
+		public IEnumerable<Geolocation> GetLocationSorted(string ip)
 		{
 			var locations = _indexStorage.FindGeolocation(ip);
 
@@ -29,7 +29,9 @@ namespace DoubleGis.Link.Providers
 			var client = new IPCheckContainer(new Uri("https://api.datamarket.azure.com/Data.ashx/MelissaData/IPCheck/v1/"));
 			client.Credentials = new NetworkCredential("accountKey", ConfigurationManager.AppSettings["ipCheckKey"]);
 
-			locations =  client.SuggestIPAddresses(ip,5,0.7).Execute()
+			var response = client.SuggestIPAddresses(ip, 5, 0.7).Execute().ToArray();
+
+			locations =  response
 				.OrderByDescending(e => e.Confidence)
 				.Select(e => new Geolocation
 				{
@@ -40,6 +42,7 @@ namespace DoubleGis.Link.Providers
 					Lon = e.Longitude,
 					Confidence = e.Confidence
 				});
+
 
 			foreach (var geolocation in locations)
 			{

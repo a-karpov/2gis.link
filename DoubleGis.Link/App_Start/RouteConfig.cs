@@ -16,10 +16,18 @@ namespace DoubleGis.Link
             );
 
 			routes.MapRoute(
+                name: "Recognize",
+                url: "{query}",
+                defaults: new { controller = "Home", action = "Recognize" }
+            );
+
+			routes.MapRoute(
                 name: "Search",
                 url: "{what}/{where}/{page}",
                 defaults: new { controller = "Home", action = "Search", page = UrlParameter.Optional  }
             );
+
+
         }
     }
 }
