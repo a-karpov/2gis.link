@@ -127,6 +127,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Content\bootstrap-config.json" />
     <Content Include="Views\Home\EmptyResult.cshtml" />
+    <Content Include="Views\Home\CannotFindYou.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

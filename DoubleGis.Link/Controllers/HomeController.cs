@@ -41,20 +41,19 @@ namespace DoubleGis.Link.Controllers
 	    }
 
 	    public ActionResult Recognize(string query)
-	    {
+	    {	
+			string where = null;
+
 			var ip = _appSettings.OverridedIp ?? FindIpAddress(HttpContext.Request);
-		    if (string.IsNullOrEmpty(ip))
+		    if (!string.IsNullOrEmpty(ip))
 		    {
-			    throw new Exception("Ip not found.");
-		    }
-
-		    var geolocationProvider = new GeolocationProvider(new EsClient(_appSettings));
-		    var location = geolocationProvider.GetLocationSorted(ip);
-
-			string where = "";
-		    if (location.Any())
-		    {
-			     where = location.First().City;
+				var geolocationProvider = new GeolocationProvider(new EsClient(_appSettings));
+				var location = geolocationProvider.GetLocationSorted(ip);
+				
+				if (location.Any())
+				{
+					 where = location.First().City;
+				}
 		    }
 
 		    var queryParts = query.Split(',');
@@ -62,12 +61,12 @@ namespace DoubleGis.Link.Controllers
 
 		    if (queryParts.Length > 1)
 		    {
-			    where += query.Substring(what.Length);
+			    where = (where ?? string.Empty) + query.Substring(what.Length);
 		    }
 
 		    if (string.IsNullOrEmpty(what))
 		    {
-			    throw new Exception("Can not recognize where.");
+			    return View("CannotFindYou");
 		    }
 
 			return Redirect(string.Format("~/{0}/{1}", what, where));
