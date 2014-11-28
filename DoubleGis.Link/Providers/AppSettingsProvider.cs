@@ -20,5 +20,6 @@ namespace DoubleGis.Link.Providers
 		public string ApiKey { get { return _settings["apiKey"]; } }
 		public string ApiVersion { get { return "1.3"; } }
 		public string OverridedIp { get { return _settings["overridedIp"]; } }
+		public string EsAddress { get { return _settings["esAddress"]; } }
 	}
 }

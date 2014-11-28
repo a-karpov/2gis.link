@@ -116,7 +116,7 @@
     <Compile Include="Providers\ApiClient.cs" />
     <Compile Include="Providers\AppSettingsProvider.cs" />
     <Compile Include="Providers\GeolocationProvider.cs" />
-    <Compile Include="Providers\IndexStorage.cs" />
+    <Compile Include="Providers\EsClient.cs" />
     <Compile Include="Providers\IPCheckContainer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,16 +10,16 @@ namespace DoubleGis.Link.Providers
 {
 	public class GeolocationProvider
 	{
-		private readonly IndexStorage _indexStorage;
+		private readonly EsClient _esClient;
 
-		public GeolocationProvider(IndexStorage indexStorage)
+		public GeolocationProvider(EsClient esClient)
 		{
-			_indexStorage = indexStorage;
+			_esClient = esClient;
 		}
 
 		public IEnumerable<Geolocation> GetLocationSorted(string ip)
 		{
-			var locations = _indexStorage.FindGeolocation(ip);
+			var locations = _esClient.FindGeolocationSorted(ip);
 
 			if (locations.Any())
 			{
@@ -46,7 +46,7 @@ namespace DoubleGis.Link.Providers
 
 			foreach (var geolocation in locations)
 			{
-				_indexStorage.IndexGeolocation(geolocation);
+				_esClient.IndexGeolocation(geolocation);
 			}
 
 			return locations;
