@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,8 +13,14 @@ namespace DoubleGis.Link.Controllers
 {
     public class HomeController : Controller
     {
-	    private readonly string _apiKey = ConfigurationManager.AppSettings["apiKey"];
-	    private const int Pagesize = 7;
+	    private readonly AppSettingsProvider _appSettings;
+	    private readonly ApiClient _apiClient;
+
+	    public HomeController()
+	    {
+		    _appSettings = new AppSettingsProvider();
+			_apiClient = new ApiClient(_appSettings);
+	    }
 
         public ActionResult Index()
         {
@@ -24,25 +29,27 @@ namespace DoubleGis.Link.Controllers
 
 	    public ActionResult Search(string what, string where, int page = 1)
 	    {
-		using (var client = new WebClient())
-			{
-				var response = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/search?key={0}&version=1.3&what={1}&where={2}&pagesize={3}&page={4}", _apiKey, what, where, Pagesize, page)));
-				var searchResponse = JsonConvert.DeserializeObject<SearchResponse>(Encoding.UTF8.GetString(response));
+		    var searchResponse = _apiClient.Search(what, where, page);
 
-				if (searchResponse.ResponseCode == 404)
-				{
-					return View("EmptyResult");
-				}
+			if (searchResponse.ResponseCode == 404)
+			{
+				return View("EmptyResult");
+			}
+
+			using (var client = new WebClient())
+			{
+		
+
 
 				var cards = new List<ProfileResponse>();
 				foreach (var cardLink in searchResponse.Result)
 				{
-					var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", _apiKey, cardLink.Id, cardLink.Hash)));
+					var data = client.DownloadData(new Uri(string.Format("http://catalog.api.2gis.ru/profile?key={0}&version=1.3&id={1}&hash={2}", _appSettings.ApiKey, cardLink.Id, cardLink.Hash)));
 					var card = JsonConvert.DeserializeObject<ProfileResponse>(Encoding.UTF8.GetString(data));
 					cards.Add(card);
 				}
 
-				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = Pagesize * page < searchResponse.Total});
+				return View(new SearchModel(searchResponse, cards){Page = page, HasNextPage = _appSettings.PageSize * page < searchResponse.Total});
 			}
 	    }
 
@@ -52,7 +59,7 @@ namespace DoubleGis.Link.Controllers
 			string where = "";
 
 
-		    var ip = ConfigurationManager.AppSettings["overrideIp"] ?? FindLanIpAddress(HttpContext.Request);
+		    var ip = _appSettings.OverridedIp ?? FindLanIpAddress(HttpContext.Request);
 
 		    var geolocationProvider = new GeolocationProvider(new IndexStorage());
 		    var location = geolocationProvider.GetLocationSorted(ip);
