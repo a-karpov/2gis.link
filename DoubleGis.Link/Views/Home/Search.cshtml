@@ -35,17 +35,17 @@
 
     if (card.Rubrics != null)
     {
-        <div>
+        <ul class="list-inline">
             <span class="sr-only">Рубрики:</span>
             @foreach (var r in card.Rubrics)
             {
-                <span>@r.Replace('/', '-')</span>
+                <li>@r.Replace('/', '-')</li>
             }
-        </div>
+        </ul>
     }
 
     <div><span class="sr-only">Телефон:</span>@string.Join(", ", card.Phones)</div>
-   
+
     <div>
         <span class="sr-only">Cайт:</span>
         @foreach (var site in card.Websites)
@@ -67,7 +67,6 @@
     @DysplayLinks("Фэйсбук", card.Facebook);
     @DysplayLinks("Твиттер", card.Twitter);
 }
-
 <nav>
     <ul class="pagination">
         @if (Model.Page > 1)
@@ -80,7 +79,6 @@
                 </a>
             </li>
         }
-
         @if (Model.HasNextPage)
         {
             <li>
@@ -92,16 +90,14 @@
             </li>
         }
     </ul>
-
     <ul class="pagination pull-right">
         <li><a href="/"><span>Новый поиск</span></a></li>
     </ul>
 </nav>
-
 <script src="http://catalog.api.2gis.ru/assets/apitracker.js"></script>
 <script>
     @foreach (CardModel card in @Model.Cards)
     {
         @:DG.apitracker.regBC('@card.RegisterBcUrl');
-    }
+        }
 </script>
