@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using DoubleGis.Link.Models;
@@ -92,16 +93,23 @@ namespace DoubleGis.Link.Controllers
 
 	    private String FindIpAddress(HttpRequestBase request)
 	    {
+			var ipPattern = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
+
 		    //The X-Forwarded-For (XFF) HTTP header field is a de facto standard for identifying the originating IP address of a 
 		    //client connecting to a web server through an HTTP proxy or load balancer
-		    String ip = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-
-		    if (string.IsNullOrEmpty(ip))
+		    var ip = ipPattern.Match(request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? string.Empty);
+			if (ip.Success)
 		    {
-			    ip = request.ServerVariables["REMOTE_ADDR"];
+			    return ip.Value;
 		    }
 
-		    return ip.Split(':').First();
+			ip = ipPattern.Match(request.ServerVariables["REMOTE_ADDR"] ?? string.Empty);
+		    if (ip.Success)
+		    {
+			    return ip.Value;
+		    }
+
+		    return null;
 	    }
 
 	    #endregion
