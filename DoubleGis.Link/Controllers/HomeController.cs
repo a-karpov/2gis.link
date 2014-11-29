@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoubleGis.Link.Models;
@@ -70,6 +71,21 @@ namespace DoubleGis.Link.Controllers
 		    }
 
 			return Redirect(string.Format("~/{0}/{1}", what, where));
+	    }
+
+	    public string Geolocation()
+	    {
+		    var request = HttpContext.Request;
+
+		    var forwardedFor = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+		    var remoteAddr = request.ServerVariables["REMOTE_ADDR"];
+		    var dns = Dns.GetHostAddresses(Dns.GetHostName());
+
+		    return
+			    "forwardedFor: " + forwardedFor + "<br />" +
+			    "remoteAddr: " + remoteAddr + "<br />" +
+				"dns name: " + Dns.GetHostName() + "<br />" +
+			    "dns ips: " + string.Join(", ", dns.Select(ip => ip.ToString()));
 	    }
 
 	    #region Private
