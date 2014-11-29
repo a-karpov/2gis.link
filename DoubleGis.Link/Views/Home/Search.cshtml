@@ -1,5 +1,6 @@
 ﻿@using DoubleGis.Link.Models
 @model DoubleGis.Link.Models.SearchModel
+@{ViewBag.Title = "Поиск";}
 
 @helper DysplayLinks(string name, IEnumerable<string> links)
 {
@@ -16,57 +17,65 @@
     }
 }
 
-@{
-    ViewBag.Title = "Поиск";
-}
+<h4 class="text-capitalize">@Model.What</h4>
+<p>@Model.Where, найдено <mark>@Model.Total</mark> организаций.</p>
 
-
-<div class="page-header">
-    <h1><span class="text-capitalize">@Model.What</span> <small>@Model.Where, всего: @Model.Total</small></h1>
-</div>
+<hr />
 
 @foreach (CardModel card in @Model.Cards)
 {
-    <h2 class="card-link">@card.Name<small>@card.Type</small></h2>
-    
-    <div>
-        <span class="sr-only">Aдрес:</span><strong>@card.Address</strong>
-    </div>
+    <h4>@card.Name</h4>
 
-    if (card.Rubrics != null)
+    // Description
+    var descriptionParts = card.Rubrics.Select(r => r.Replace('/', '-')).ToList();
+    if (card.Type != null)
     {
-        <ul class="list-inline">
-            <span class="sr-only">Рубрики:</span>
-            @foreach (var r in card.Rubrics)
-            {
-                <li>@r.Replace('/', '-')</li>
-            }
-        </ul>
+        descriptionParts.Insert(0, card.Type);
     }
 
-    <div><span class="sr-only">Телефон:</span>@string.Join(", ", card.Phones)</div>
+    var description = string.Join(", ", descriptionParts);
+    description = description.First().ToString().ToUpper() + description.Substring(1).ToLower();
 
-    <div>
-        <span class="sr-only">Cайт:</span>
-        @foreach (var site in card.Websites)
-        {
-            <a href="@site.Value">@site.Alias</a>
-        }
-    </div>
+    if (!string.IsNullOrEmpty(description))
+    {
+        <p>@description.</p>
+    }
 
-    <div>
-        <span class="sr-only">Почта:</span>
-        @foreach (var email in card.Emails)
-        {
-            <a href="mailto:@email">@email</a>
-        }
-    </div>
+    <p>
+        <div>
+            <span class="sr-only">Aдрес:</span>
+            <span>@card.Address</span>
+        </div>
+        
+        <div>
+            <span class="sr-only">Телефон:</span>
+            @string.Join(", ", card.Phones)
+        </div>
 
-    @DysplayLinks("В Контакте", card.Vkontakte);
-    @DysplayLinks("Инстаграм", card.Instagram);
-    @DysplayLinks("Фэйсбук", card.Facebook);
-    @DysplayLinks("Твиттер", card.Twitter);
+        <div>
+            <span class="sr-only">Cайт:</span>
+            @foreach (var site in card.Websites)
+            {
+                <a href="@site.Value">@site.Alias</a>
+            }
+        </div>
+
+        <div>
+            <span class="sr-only">Почта:</span>
+            @foreach (var email in card.Emails)
+            {
+                <a href="mailto:@email">@email</a>
+            }
+        </div>
+
+        @DysplayLinks("В Контакте", card.Vkontakte)
+        @DysplayLinks("Инстаграм", card.Instagram)
+        @DysplayLinks("Фэйсбук", card.Facebook)
+        @DysplayLinks("Твиттер", card.Twitter)
+    </p>
+    <hr />
 }
+
 <nav>
     <ul class="pagination">
         @if (Model.Page > 1)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace DoubleGis.Link.Models
@@ -28,7 +29,7 @@ namespace DoubleGis.Link.Models
 			Name = nameParts.First();
 			if (nameParts.Last().Length > 0)
 			{
-				Type = nameParts.Last();
+				Type = nameParts.Last().Trim();
 			}
 
 			var contacts = (from cg in profileResponse.Contacts
