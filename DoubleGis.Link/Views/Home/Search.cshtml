@@ -17,6 +17,16 @@
     }
 }
 
+@helper SafeDysplay(string name, string value)
+{
+    if (!string.IsNullOrWhiteSpace(value))
+    {
+        <div>
+            <span class="sr-only">@name:</span>@value
+        </div>
+    }
+}
+
 <h4 class="text-capitalize">@Model.What</h4>
 <p>@Model.Where, найдено <mark>@Model.Total</mark> организаций.</p>
 
@@ -48,31 +58,30 @@
     }
 
     <p>
-        <div>
-            <span class="sr-only">Aдрес:</span>
-            <span>@card.Address</span>
-        </div>
+        @SafeDysplay("Адрес", @card.Address)
+        @SafeDysplay("Телефон", string.Join(", ", card.Phones))
         
-        <div>
-            <span class="sr-only">Телефон:</span>
-            @string.Join(", ", card.Phones)
-        </div>
-
-        <div>
-            <span class="sr-only">Cайт:</span>
-            @foreach (var site in card.Websites)
-            {
-                <a href="@site.Value">@site.Alias</a>
-            }
-        </div>
-
-        <div>
-            <span class="sr-only">Почта:</span>
-            @foreach (var email in card.Emails)
-            {
-                <a href="mailto:@email">@email</a>
-            }
-        </div>
+        @if (card.Websites != null && card.Websites.Any())
+        {
+            <div>
+                <span class="sr-only">Cайт:</span>
+                @foreach (var site in card.Websites)
+                {
+                    <a href="@site.Value">@site.Alias</a>
+                }
+            </div>
+        }    
+        
+        @if (card.Emails != null && card.Emails.Any())
+        {
+            <div>
+                <span class="sr-only">Почта:</span>
+                @foreach (var email in card.Emails)
+                {
+                    <a href="mailto:@email">@email</a>
+                }
+            </div>
+        }
 
         @DysplayLinks("В Контакте", card.Vkontakte)
         @DysplayLinks("Инстаграм", card.Instagram)
@@ -111,6 +120,8 @@
 </nav>
 <script src="http://catalog.api.2gis.ru/assets/apitracker.js"></script>
 <script>
+    document.focus();
+
     @foreach (CardModel card in @Model.Cards)
     {
         @:DG.apitracker.regBC('@card.RegisterBcUrl');
