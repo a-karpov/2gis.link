@@ -1,24 +1,75 @@
-﻿@{
-    ViewBag.Title = "Адаптированный справочник организаций";
-}
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поиск фирм и организаций</title>
+    <meta name="description" content="Поиск фирм и огранизаций с использованием базы 2ГИС.">
 
-<form name="form" role="form">
-    <label for="search" class=""><h1>Поиск</h1></label>
-    <div class="input-group">
-        <input name="what" type="text" class="form-control" placeholder="Я ищу..." data-bind="value: what" />
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Найти!</button>
-        </span>
-    </div>
-</form>
-
-<script>
-    document.form.onsubmit = function () {
-        var what = document.form.what.value;
-        if (what) {
-            location = what;
+    <style>
+        body {
+            margin-top: 6em;
+            color: rgb(68, 68, 68);
+            font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
-        return false;
-    };
-</script>
+        .page {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        form {
+            display:inline;
+            vertical-align:top;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-right: 100px;
+            padding: 0.3em;
+        }
+
+        button {
+            float: right;
+            padding: 0.3em;
+        }
+
+        h1 {
+            -webkit-font-smoothing: antialiased;
+            display: block;
+            font-size: 24px;
+            font-weight: normal;
+            height: 26px;
+            letter-spacing: 0.1px;
+            line-height: 26.4px;
+            margin-bottom: 11.5px;
+            margin-top: 11.5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <form name="form">
+            <label for="what"><h1>Поиск организаций</h1></label>
+            <button type="submit">Найти!</button>
+            <div style="overflow: hidden; padding-right: 1em;">
+                <input name="what" id="what" type="text" />
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        document.form.onsubmit = function () {
+            var what = document.form.what.value;
+            if (what) {
+                location = what;
+            }
+
+            return false;
+        };
+    </script>
+</body>
+</html>
