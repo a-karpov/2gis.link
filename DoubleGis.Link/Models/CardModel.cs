@@ -27,7 +27,7 @@ namespace DoubleGis.Link.Models
 
 			var nameParts = profileResponse.Name.Split(',');
 			Name = nameParts.First();
-			if (nameParts.Last().Length > 0)
+			if (nameParts.Length > 1 && nameParts.Last().Trim().Length > 3)
 			{
 				Type = nameParts.Last().Trim();
 			}
