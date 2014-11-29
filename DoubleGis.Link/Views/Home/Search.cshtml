@@ -27,12 +27,18 @@
     <h4>@card.Name</h4>
 
     // Description
-    var descriptionParts = card.Rubrics.Select(r => r.Replace('/', '-')).ToList();
+    var descriptionParts = new List<string>();
+
     if (card.Type != null)
     {
         descriptionParts.Insert(0, card.Type);
     }
-
+    
+    if (card.Rubrics != null)
+    {
+        descriptionParts.AddRange(card.Rubrics.Select(r => r.Replace('/', '-')));
+    }
+    
     var description = string.Join(", ", descriptionParts);
     description = description.First().ToString().ToUpper() + description.Substring(1).ToLower();
 
