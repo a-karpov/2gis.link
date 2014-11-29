@@ -120,10 +120,8 @@
 </nav>
 <script src="http://catalog.api.2gis.ru/assets/apitracker.js"></script>
 <script>
-    document.focus();
-
     @foreach (CardModel card in @Model.Cards)
     {
         @:DG.apitracker.regBC('@card.RegisterBcUrl');
-        }
+    }
 </script>
