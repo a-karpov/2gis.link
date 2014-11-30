@@ -1,14 +1,20 @@
-﻿@{ViewBag.Title = "Справочник организаций";}
+﻿@{ViewBag.Title = "Поиск организаций";}
 
 <form role="form" name="form">
-    <label for="what" class=""><h4>Поиск организаций</h4></label>
+    <label for="what"><h4>Поиск</h4></label>
     <div class="input-group">
         <input type="text" name="what" id="what" class="form-control">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Найти!</button>
+            <input class="btn btn-default" type="submit" value="Найти!" />
         </span>
-    </div>
+    </div>    
 </form>
+
+<hr />
+
+<p>
+    Поиск по справочнику фирм и организаций 2ГИС.
+</p>
 
 <script>
     document.form.what.focus();
