@@ -91,6 +91,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fonts.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -125,6 +128,7 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\EmptyResult.cshtml" />
     <Content Include="Views\Home\CannotFindYou.cshtml" />
+    <Content Include="Content\config.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -134,7 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
     <Folder Include="Scripts\" />
   </ItemGroup>
   <PropertyGroup>
