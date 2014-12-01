@@ -49,7 +49,7 @@ namespace DoubleGis.Link.Controllers
 			var ip = _appSettings.OverridedIp ?? FindIpAddress(HttpContext.Request);
 		    if (!string.IsNullOrEmpty(ip))
 		    {
-				var geolocationProvider = new GeolocationProvider(new EsClient(_appSettings));
+				var geolocationProvider = new GeolocationProvider(new ElasticStorage(_appSettings));
 				var location = geolocationProvider.GetLocationSorted(ip);
 				
 				if (location.Any())

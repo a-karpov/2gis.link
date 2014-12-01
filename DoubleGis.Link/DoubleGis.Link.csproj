@@ -122,7 +122,7 @@
     <Compile Include="Providers\GisApiClient.cs" />
     <Compile Include="Providers\AppSettingsProvider.cs" />
     <Compile Include="Providers\GeolocationProvider.cs" />
-    <Compile Include="Providers\EsClient.cs" />
+    <Compile Include="Providers\ElasticStorage.cs" />
     <Compile Include="Providers\IPCheckContainer.cs" />
   </ItemGroup>
   <ItemGroup>

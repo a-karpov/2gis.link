@@ -10,25 +10,27 @@ namespace DoubleGis.Link.Providers
 {
 	public class GeolocationProvider
 	{
-		private readonly EsClient _esClient;
+		private readonly ElasticStorage _elasticStorage;
 
-		public GeolocationProvider(EsClient esClient)
+		public GeolocationProvider(ElasticStorage elasticStorage)
 		{
-			_esClient = esClient;
+			_elasticStorage = elasticStorage;
 		}
 
 		public IEnumerable<Geolocation> GetLocationSorted(string ip)
 		{
-			var locations = _esClient.FindGeolocationSorted(ip);
+			var locations = _elasticStorage.FindGeolocationSorted(ip);
 			if (locations.Any())
 			{
 				return locations;
 			}
 
 			var client = GetIpCheckClient();
+			var result = new List<Geolocation>();
+
 			foreach (var loc in client.SuggestIPAddresses(ip, 5, 0.7).Execute())
 			{
-				_esClient.IndexGeolocation(new Geolocation
+				var geolocation = new Geolocation
 				{
 					Country = loc.Country,
 					City = loc.City,
@@ -36,10 +38,13 @@ namespace DoubleGis.Link.Providers
 					Lat = loc.Latitude,
 					Lon = loc.Longitude,
 					Confidence = loc.Confidence
-				});
+				};
+
+				result.Add(geolocation);
+				_elasticStorage.IndexGeolocation(geolocation);
 			}
 
-			return _esClient.FindGeolocationSorted(ip);
+			return result.AsReadOnly();
 		}
 
 		#region Private

@@ -5,12 +5,12 @@ using Nest;
 
 namespace DoubleGis.Link.Providers
 {
-	public class EsClient
+	public class ElasticStorage
 	{
 		private readonly AppSettingsProvider _settings;
-		private const string IntexName = "2gislink";
+		private const string IntexName = "geolocation";
 
-		public EsClient(AppSettingsProvider settings)
+		public ElasticStorage(AppSettingsProvider settings)
 		{
 			_settings = settings;
 		}
