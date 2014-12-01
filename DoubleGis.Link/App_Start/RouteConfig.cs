@@ -16,9 +16,9 @@ namespace DoubleGis.Link
             );
 
 			routes.MapRoute(
-                name: "Geolocation",
-                url: "@geolocation",
-                defaults: new { controller = "Home", action = "Geolocation" }
+                name: "Page",
+                url: "@{action}",
+                defaults: new { controller = "Home" }
             );
 
 			routes.MapRoute(

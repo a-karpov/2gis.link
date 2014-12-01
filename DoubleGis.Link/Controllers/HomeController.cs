@@ -25,7 +25,7 @@ namespace DoubleGis.Link.Controllers
 
 	    public ActionResult Search(string what, string where, int page = 1)
 	    {
-			var apiClient = new ApiClient(_appSettings);
+			var apiClient = new GisApiClient(_appSettings);
 
 		    var searchResponse = apiClient.Search(what, where, page);
 			if (searchResponse.ResponseCode == 404)
@@ -72,6 +72,12 @@ namespace DoubleGis.Link.Controllers
 		    }
 
 			return Redirect(string.Format("~/{0}/{1}", what, where));
+	    }
+
+	    public ActionResult SelectProject()
+	    {
+			var api = new GisApiClient(_appSettings);
+		    return View(api.Projects().Result);
 	    }
 
 	    public string Geolocation()
