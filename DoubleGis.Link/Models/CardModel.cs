@@ -49,12 +49,16 @@ namespace DoubleGis.Link.Models
 
 		private static string FormatPhone(string value)
 		{
-			value = string.Format("{0}-{1}-{2}-{3}-{4}",
-				value.Substring(0, 2),
-				value.Substring(2, 3),
-				value.Substring(5, value.Length - 9),
-				value.Substring(value.Length - 4, 2),
-				value.Substring(value.Length - 2, 2));
+			if (value.Length > 9)
+			{
+				return  string.Format("{0}-{1}-{2}-{3}-{4}",
+					value.Substring(0, 2),
+					value.Substring(2, 3),
+					value.Substring(5, value.Length - 9),
+					value.Substring(value.Length - 4, 2),
+					value.Substring(value.Length - 2, 2));
+			}
+
 			return value;
 		}
 
