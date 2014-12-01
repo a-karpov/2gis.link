@@ -1,25 +1,31 @@
 ﻿@{ViewBag.Title = "Поиск организаций";}
 
-<form role="form" name="form">
+<form role="form" name="form" data-bind="submit: onSearch">
     <label for="what"><h4>Поиск</h4></label>
     <div class="input-group">
-        <input type="text" name="what" id="what" class="form-control">
+        <input type="search" id="what" class="form-control" data-bind="value: what">
         <span class="input-group-btn">
             <input class="btn btn-default" type="submit" value="Найти!" />
         </span>
-    </div>    
+    </div>
 </form>
 
 <hr />
 
 <p>
     Поиск по справочнику фирм и организаций 2ГИС.
+    <span id="whereTools" class="hidden">
+        Для уточнения Вашего местоположения, Вы можете
+        <a href="javascript:geolocationOn()">включить геолокацию</a> браузера
+        или
+        <a href="#">выбрать город из списка</a>.
+    </span>
 </p>
 
 <script>
     document.form.what.focus();
 
-    document.form.onsubmit = function () {
+    /*   document.form.onsubmit = function () {
         var what = document.form.what.value;
         if (what) {
             location = what;
@@ -27,4 +33,18 @@
 
         return false;
     };
+
+    if (Modernizr.localstorage) {
+        document.getElementById("whereTools").className = '';
+    }
+
+    function geolocationOn() {
+        localStorage.setItem('geolocationOn', true);
+        console.log(navigator.geolocation);
+        navigator.geolocation.getCurrentPosition(function(position) {
+            console.log(position);
+        });
+    }*/
 </script>
+
+<script src="~/Scripts/index.js"></script>
